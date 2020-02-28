@@ -5,11 +5,15 @@ import com.hendisantika.springboothikaricpsample.entity.Article;
 import com.hendisantika.springboothikaricpsample.service.ArticleService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,5 +44,16 @@ public class ArticleController {
             responseArticleList.add(ob);
         }
         return new ResponseEntity<List<ArticleInfoDto>>(responseArticleList, HttpStatus.OK);
+    }
+
+    //Creates a new article
+    @PostMapping(value = "article")
+    public ResponseEntity<Void> addArticle(@RequestBody ArticleInfoDto articleInfo, UriComponentsBuilder builder) {
+        Article article = new Article();
+        BeanUtils.copyProperties(articleInfo, article);
+        articleService.addArticle(article);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(builder.path("/article/{id}").buildAndExpand(article.getArticleId()).toUri());
+        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 }
