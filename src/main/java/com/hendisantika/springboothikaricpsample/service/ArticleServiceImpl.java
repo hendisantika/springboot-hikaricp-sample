@@ -1,8 +1,12 @@
 package com.hendisantika.springboothikaricpsample.service;
 
+import com.hendisantika.springboothikaricpsample.entity.Article;
 import com.hendisantika.springboothikaricpsample.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -17,4 +21,11 @@ import org.springframework.stereotype.Service;
 public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private ArticleRepository articleRepository;
+
+    @Override
+    public List<Article> getAllArticles() {
+        List<Article> list = new ArrayList<>();
+        articleRepository.findAll().forEach(e -> list.add(e));
+        return list;
+    }
 }
