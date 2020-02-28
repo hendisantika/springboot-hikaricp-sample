@@ -28,4 +28,9 @@ public class ArticleServiceImpl implements ArticleService {
         articleRepository.findAll().forEach(e -> list.add(e));
         return list;
     }
+
+    @Override
+    public void addArticle(Article article) {
+        articleRepository.save(article);
+    }
 }
