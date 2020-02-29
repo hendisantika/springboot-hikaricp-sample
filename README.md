@@ -45,3 +45,22 @@ public class HikariIntegrationTest {
     }
 }
 ```
+
+## Removing the Tomcat JDBC Dependency
+The second option is to let Spring Boot find the Hikari DataSource implementation itself.
+
+**If Spring Boot cannot find the Tomcat DataSource in the classpath, it will automatically look for the Hikari DataSource next.** The discovery algorithm is described in [the reference manual](https://docs.spring.io/spring-boot/docs/1.5.15.RELEASE/reference/htmlsingle/#boot-features-connect-to-production-database).
+
+To remove the Tomcat Connection Pool from the classpath we can exclude it in our *pom.xml*:
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-jpa</artifactId>
+    <exclusions>
+        <exclusion>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jdbc</artifactId>
+         </exclusion>
+     </exclusions>
+</dependency>
+```
