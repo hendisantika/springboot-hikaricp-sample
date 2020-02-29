@@ -64,3 +64,15 @@ To remove the Tomcat Connection Pool from the classpath we can exclude it in our
      </exclusions>
 </dependency>
 ```
+Now, the test from the previous section will also work without setting the spring.datasource.type property.
+
+## Configuring Hikari With Spring Boot 2.x
+In Spring Boot 2, Hikari is the default DataSource implementation.
+
+This is what's changed from Spring Boot 1.x:
+
+- the dependency to Hikari is now automatically included in spring-boot-starter-data-jpa
+- the discovery algorithm that automatically determines a DataSource implementation now prefers Hikari over TomcatJDBC (see [the reference manual](https://docs.spring.io/spring-boot/docs/2.2.5.RELEASE/reference/htmlsingle/)).
+**Thus, we have nothing to do if we want to use Hikari in an application based on Spring Boot 2.x.**
+
+
