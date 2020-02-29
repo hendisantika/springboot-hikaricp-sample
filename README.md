@@ -75,4 +75,20 @@ This is what's changed from Spring Boot 1.x:
 - the discovery algorithm that automatically determines a DataSource implementation now prefers Hikari over TomcatJDBC (see [the reference manual](https://docs.spring.io/spring-boot/docs/2.2.5.RELEASE/reference/htmlsingle/)).
 **Thus, we have nothing to do if we want to use Hikari in an application based on Spring Boot 2.x.**
 
+## Tuning Hikari Configuration Parameters
 
+One of Hikari's advantages over other *DataSource* implementations is the fact that it offers a lot of configuration parameters.
+
+We can specify the values for these parameters by using the prefix *spring.datasource.hikari* and appending the name of the Hikari parameter:
+```
+spring.datasource.hikari.connectionTimeout=30000
+spring.datasource.hikari.idleTimeout=600000
+spring.datasource.hikari.maxLifetime=1800000
+```
+...
+A list of all Hikari parameters with a good explanation is available on [the Hikari Github Site](https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby).
+
+## Conclusion
+In this article, we've configured the Hikari DataSource implementation in a Spring Boot 1.x application and learned how to leverage Spring Boot 2.x's autoconfiguration.
+
+The code for the Spring Boot 1.x example is available [here](https://github.com/eugenp/tutorials/tree/master/spring-4), and the code for the Spring Boot 2.x example is available [here](https://github.com/eugenp/tutorials/tree/master/spring-5).
